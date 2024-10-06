@@ -1,0 +1,69 @@
+<!-- templates/main_page_thread.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JDN Local Model GUI</title>
+    <style>
+        /* [Include your existing styles here] */
+        /* Additional styles can be added if needed */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JDN Local Model GUI</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <textarea name="message" rows="4" placeholder="Enter your message here..." required></textarea><br>
+            {% if not context_window_locked %}
+                <input type="number" name="context_window" placeholder="Context Window (First message only)">
+            {% endif %}
+            <div class="controls">
+                <input type="number" step="0.1" min="0" max="1" name="temperature" placeholder="Temperature (e.g., 0.7)" value="{{ temperature }}">
+                <input type="number" step="0.1" min="0" max="1" name="top_p" placeholder="Top-p (e.g., 0.9)" value="{{ top_p }}">
+                <input type="number" name="num_tokens" placeholder="Max Tokens" value="512">
+            </div>
+            <label for="model_name">Select Model:</label><br>
+            <select id="model_name" name="model_name">
+                {% for model in models_available %}
+                    <option value="{{ model }}" {% if model == selected_model %}selected{% endif %}>{{ model }}</option>
+                {% endfor %}
+            </select><br><br>
+            <input type="file" name="image"><br><br>
+            <div class="buttons">
+                <button type="submit">Submit</button>
+                <button type="button" onclick="clearHistory()">Clear Chat</button>
+                <button type="button" onclick="saveConversation()">Save Conversation</button>
+            </div>
+        </form>
+
+        <div class="stopwatch">
+            {% if elapsed_time %}
+                Time elapsed: {{ elapsed_time }}
+            {% endif %}
+        </div>
+
+        <div class="conversation-history">
+            <h2>Conversation History</h2>
+            {% for entry in conversation_history %}
+                <div class="conversation-entry">
+                    <p><strong class="sender-{{ entry.sender|lower }}">{{ entry.sender }}:</strong> {{ entry.message }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        function clearHistory() {
+            fetch('/clear', { method: 'POST' }).then(() => {
+                location.reload();
+            });
+        }
+        function saveConversation() {
+            fetch('/save_conversation', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                });
+        }
+    </script>
+</body>
+</html>

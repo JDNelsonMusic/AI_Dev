@@ -1,0 +1,14 @@
+Flask
+librosa
+soundfile
+scikit-learn
+joblib
+matplotlib
+plotly
+pandas
+numpy
+seaborn
+flask-bootstrap
+Flask-WTF
+WTForms
+pdfkit

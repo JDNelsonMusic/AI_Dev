@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Triple Chat Thread</title>
+</head>
+<body>
+    <h1>Submit a Prompt</h1>
+    <form method="post">
+        <textarea name="prompt" rows="5" cols="50" placeholder="Enter your prompt here..."></textarea><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if responses %}
+        <h2>Responses:</h2>
+        {% for model, response in responses.items() %}
+            <h3>{{ model }}</h3>
+            <pre>{{ response }}</pre>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

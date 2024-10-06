@@ -1,0 +1,12 @@
+ai_env/
+dvc_env/
+*.pyc
+__pycache__/
+.DS_Store
+LlamaModels/
+ai_env/
+dvc_env/
+LlamaModels/ # Since models are large files
+*.pyc
+__pycache__/
+.DS_Store

@@ -1,0 +1,15 @@
+/* static/styles.css */
+body {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.form-control {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.btn-primary {
+    background-color: #bb86fc;
+    border-color: #bb86fc;
+}

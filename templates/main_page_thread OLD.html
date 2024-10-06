@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JDN Local Model GUI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        input, textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #333;
+            color: #f0f0f0;
+            border: none;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #444;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+        .response-box {
+            padding: 20px;
+            background-color: #222;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .stopwatch {
+            color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JDN Local Model GUI</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <textarea name="message" rows="4" placeholder="Enter your message here..."></textarea><br>
+            <input type="number" name="context_window" placeholder="Context Window (First message only)">
+            <input type="number" name="num_tokens" placeholder="Number of Tokens"><br>
+            <input type="file" name="image"><br>
+            <button type="submit">Submit</button>
+            <button type="button" onclick="clearHistory()">Clear Chat</button>
+        </form>
+
+        <div class="stopwatch">
+            {% if elapsed_time %}
+                Time elapsed: {{ elapsed_time }}
+            {% endif %}
+        </div>
+
+        <div class="response-box">
+            <h2>Response:</h2>
+            <div id="response-area">
+                {% if response %}
+                    <p>{{ response }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="conversation-history">
+            <h2>Conversation History</h2>
+            {% for entry in conversation_history %}
+                <div>
+                    <p><strong>You:</strong> {{ entry.message }}</p>
+                    <p><strong>Model:</strong> {{ entry.response }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        function clearHistory() {
+            fetch('/clear', { method: 'POST' }).then(() => {
+                location.reload();
+            });
+        }
+    </script>
+</body>
+</html>

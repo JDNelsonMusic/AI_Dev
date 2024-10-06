@@ -1,0 +1,8 @@
+setup:
+    conda env create -f environment.yml
+
+test:
+    pytest tests/
+
+run:
+    python src/main.py

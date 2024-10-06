@@ -1,0 +1,39 @@
+<!-- templates/index.html -->
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1 class="text-center mb-4">Llama3.2-11B-Vision-Instruct Interaction</h1>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="message" class="form-label">Your Message</label>
+        <textarea class="form-control" id="message" name="message" rows="3" required>{{ message or '' }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label for="image" class="form-label">Attach an Image (Optional)</label>
+        <input class="form-control" type="file" id="image" name="image" accept="image/*">
+    </div>
+    <div class="mb-3">
+        <label for="context_window" class="form-label">Context Window Size</label>
+        <input type="number" class="form-control" id="context_window" name="context_window" placeholder="Default: 512">
+    </div>
+    <div class="mb-3">
+        <label for="num_tokens" class="form-label">Number of Tokens</label>
+        <input type="number" class="form-control" id="num_tokens" name="num_tokens" placeholder="Default: 50">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% if response %}
+<hr>
+<h3>Response:</h3>
+<p>{{ response }}</p>
+{% endif %}
+
+{% if image_path %}
+<hr>
+<h3>Uploaded Image:</h3>
+<img src="{{ url_for('static', filename='uploads/' + image_path.split('/')[-1]) }}" alt="Uploaded Image" class="img-fluid">
+{% endif %}
+
+{% endblock %}

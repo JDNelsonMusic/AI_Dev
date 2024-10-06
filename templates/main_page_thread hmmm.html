@@ -1,0 +1,36 @@
+<!-- templates/main_page_thread.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat with Assistant</title>
+</head>
+<body>
+    <h1>Chat with Assistant</h1>
+    <div>
+        {% for message in conversation_history %}
+            <p><strong>{{ message.sender }}:</strong> {{ message.message }}</p>
+        {% endfor %}
+    </div>
+    <form method="post" action="/">
+        <label for="message">Your message:</label><br>
+        <input type="text" id="message" name="message" required><br><br>
+        <label for="num_tokens">Max Tokens (optional):</label><br>
+        <input type="number" id="num_tokens" name="num_tokens"><br><br>
+        <label for="model_name">Select Model:</label><br>
+        <select id="model_name" name="model_name">
+            {% for model in models_available %}
+                <option value="{{ model }}" {% if model == selected_model %}selected{% endif %}>{{ model }}</option>
+            {% endfor %}
+        </select><br><br>
+        <input type="submit" value="Send">
+    </form>
+    <form method="post" action="/clear">
+        <input type="submit" value="Clear Conversation">
+    </form>
+    {% if elapsed_time %}
+        <p>Response generated in {{ elapsed_time }}</p>
+    {% endif %}
+</body>
+</html>
+

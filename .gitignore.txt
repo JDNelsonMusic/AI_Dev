@@ -1,0 +1,29 @@
+# Ignore virtual environments
+ai_env/
+dvc_env/
+LlamaFlask/
+Everything Else/
+
+# Ignore model files and large binaries
+*.safetensors
+*.dylib
+*.so
+*.pth
+*.pkl
+*.h5
+*.ckpt
+*.sh
+
+# Ignore MacOS-specific files
+.DS_Store
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+
+# Ignore logs
+logs/
+*.log
+
+# Ignore environment files
+.env
